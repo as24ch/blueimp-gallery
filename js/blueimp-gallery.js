@@ -148,7 +148,7 @@
       // and from first to last slide:
       continuous: true,
       // Minimal number of slides required for continuous sliding
-      minSlidesForContinuous: 0,
+      minSlidesForContinuous: 2,
       // Remove elements outside of the preload range from the DOM:
       unloadElements: true,
       // Start with the automatic slideshow:
@@ -1451,6 +1451,9 @@
       }
       // Override any given options:
       $.extend(this.options, options)
+      if (this.options.minSlidesForContinuous < 2) {
+        this.options.minSlidesForContinuous = 2
+      }
       if (this.num < this.options.minSlidesForContinuous) {
         this.options.continuous = this.options.continuous ? null : false
       }

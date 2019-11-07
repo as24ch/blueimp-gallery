@@ -115,11 +115,13 @@
     handleClick: function(event) {
       var target = event.target || event.srcElement
       var parent = target.parentNode
-      if (parent === this.indicatorContainer[0]) {
+      var indicatorContainer =
+        this.indicatorContainer && this.indicatorContainer[0]
+      if (parent === indicatorContainer) {
         // Click on indicator element
         this.preventDefault(event)
         this.slide(this.getNodeIndex(target))
-      } else if (parent.parentNode === this.indicatorContainer[0]) {
+      } else if (parent.parentNode === indicatorContainer) {
         // Click on indicator child element
         this.preventDefault(event)
         this.slide(this.getNodeIndex(parent))
