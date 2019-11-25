@@ -110,7 +110,7 @@
       srcsetProperty: 'urlset',
       // The gallery listens for transitionend events before triggering the
       // opened and closed events, unless the following option is set to false:
-      displayTransition: false,
+      displayTransition: true,
       // Defines if the gallery slides are cleared from the gallery modal,
       // or reused for the next gallery initialization:
       clearSlides: true,
