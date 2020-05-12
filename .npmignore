@@ -1,0 +1,8 @@
+/.github/
+/src/
+.no-master-commit.js
+.editorconfig
+.eslintignore
+.eslintrc.js
+README.md
+CHANGELOG.md

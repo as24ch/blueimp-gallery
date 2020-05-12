@@ -43,7 +43,15 @@
     "stylelint": "10",
     "stylelint-config-prettier": "5",
     "stylelint-config-recommended": "2",
-    "uglify-js": "3"
+    "uglify-js": "3",
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
+    "@release-it/conventional-changelog": "1.1.0",
+    "commitizen": "4.0.3",
+    "cz-conventional-changelog": "3.1.0",
+    "git-rev-sync": "2.0.0",
+    "husky": "4.2.3",
+    "release-it": "13.5.1"
   },
   "stylelint": {
     "extends": [
@@ -81,7 +89,12 @@
     "build": "npm run build:js && npm run build:jquery && npm run build:css",
     "preversion": "npm test",
     "version": "npm run build && git add -A js css",
-    "postversion": "git push --tags origin master master:gh-pages && npm publish"
+    "postversion": "git push --tags origin master master:gh-pages && npm publish",
+    "commit": "git add . && git-cz",
+    "release": "release-it --git.requireBranch=master",
+    "prerelease": "git checkout master && git fetch && git reset --hard origin/master",
+    "release:fix": "release-it",
+    "release:beta": "release-it --preRelease"
   },
   "files": [
     "css/*.css",
@@ -92,5 +105,45 @@
     "js/*.js",
     "js/*.js.map"
   ],
-  "main": "js/blueimp-gallery.js"
+  "main": "js/blueimp-gallery.js",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    },
+    "git": {
+      "commitMessage": "chore: relase ${version}",
+      "commitArgs": [
+        "--no-verify"
+      ],
+      "pushArgs": [
+        "--follow-tags",
+        "--force"
+      ],
+      "pushRepo": "git@github.com:as24ch/feature-flags.git"
+    },
+    "npm": {
+      "publish": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "conventionalcommits",
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
 }
