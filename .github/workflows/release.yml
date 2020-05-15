@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: github.com
+      - name: install dependencies
+        run: npm ci
+      - name: build
+        run: npm run build:ci --if-present
+      - name: release
+        run: |
+          git config user.name "ci"
+          git config user.email "ci@as24.dev"
+          npm run release
+    env:
+      GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
