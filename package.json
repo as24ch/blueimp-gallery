@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com:as24ch/blueimp-gallery.git"
+    "url": "git://github.com/as24ch/blueimp-gallery.git"
   },
   "license": "MIT",
   "devDependencies": {
